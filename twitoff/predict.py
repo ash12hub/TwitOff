@@ -1,6 +1,6 @@
 import numpy as np
-from sklearn.model_selection import LogisticRegression
-from .modela import User
+from sklearn.linear_model import LogisticRegression
+from .models import User
 from .twitter import BASILICA
 
 from .models import User
