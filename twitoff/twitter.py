@@ -70,4 +70,4 @@ def add_default_users(users=TWITTER_USERS):
 def update_all_users():
     """Update all Tweets for all Users in the User table."""
     for user in User.qeury.all():
-        add_of_update_user(user.username)
+        add_or_update_user(user.username)
