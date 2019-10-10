@@ -20,10 +20,10 @@ def add_or_update_user(username):
         twitter_user = TWITTER.get_user(username)
 
         # Add user info to User table in database
-        db_user = User(id=twitter_user.id, 
-                       name=twitter_user.screen_name,
-                       followers=twitter_user.followers_count,
-                       recent_tweet_id=recent_tweet_id)
+        db_user = (User.query.get(twitter_user.id) or
+                   User(id=twitter_user.id, 
+                        username=twitter_user.screen_name,
+                        followers=twitter_user.followers_count))
         DB.session.add(db_user)
 
         # Add as many recent non-retweet/reply tweets as possible
@@ -31,7 +31,8 @@ def add_or_update_user(username):
         tweets = twitter_user.timeline(count=200, 
                                        exclude_replies=True, 
                                        include_rts=False, 
-                                       tweet_mode='extended')
+                                       tweet_mode='extended',
+                                       since_id=db_user.newest_tweet_id)
 
         # Add additional user info ro User table in database
         if tweets:
@@ -69,4 +70,4 @@ def add_users(users=TWITTER_USERS):
 def update_all_users():
     """Update all Tweets for all Users in the User table."""
     for user in User.qeury.all():
-        add_of_update_user(user.name)
+        add_of_update_user(user.username)
