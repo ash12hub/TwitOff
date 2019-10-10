@@ -58,7 +58,7 @@ def add_or_update_user(username):
         DB.session.commit()
 
 
-def add_users(users=TWITTER_USERS):
+def add_default_users(users=TWITTER_USERS):
     """
     Add/update a list of users (string of user names).
     May take awhile, so run "offline" (flask shell)
