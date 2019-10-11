@@ -16,7 +16,7 @@ def create_app():
         return render_template('base.html', title='TwitOff!', users=User.query.all())
 
     @app.route('/user', methods=['POST'])
-    @app.route('/user<name>', methods=['GET'])
+    @app.route('/user/<name>', methods=['GET'])
     def user(name='', message=''):
         name = name or request.values['user_name']
         if(name == ''):
